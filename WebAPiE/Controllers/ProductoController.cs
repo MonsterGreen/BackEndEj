@@ -21,7 +21,7 @@ namespace WebAPiE.Controllers
         }
 
         [HttpGet("{codigoproducto}")]
-        public IActionResult get(string codigoproducto)
+        public IActionResult Get(string codigoproducto)
         {
             var producto = this.dbProducto.GetbyCodigoProducto(codigoproducto);
 
@@ -40,6 +40,18 @@ namespace WebAPiE.Controllers
             if (result == null)
             {
                 return BadRequest($"No fue posible crear el producto {producto.codproducto}.");
+            }
+
+            return Ok(result);
+        }
+
+        [HttpPut("{codigoproducto}")]
+        public IActionResult Put([FromBody] Producto producto,string codigoproducto)
+        {
+            var result = this.dbProducto.Update(codigoproducto, producto);
+            if (result == null)
+            {
+                return BadRequest($"No fue posible actualizar el producto {producto.codproducto}.");
             }
 
             return Ok(result);

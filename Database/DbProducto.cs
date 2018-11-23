@@ -42,6 +42,34 @@ namespace Database
             }
         }
 
+        public Producto Update(string codigoproducto,Producto producto)
+        {
+            try
+            {
+                var todo = this
+                           .Producto
+                           .FirstOrDefault(c => c.codproducto == codigoproducto);
+                if (todo == null)
+                {
+                    return null;
+                }
+                todo.codproducto = producto.codproducto;
+                todo.nombreproducto = producto.nombreproducto;
+                todo.tipoproducto = producto.tipoproducto;
+                todo.saldominimo = producto.saldominimo;
+                todo.estado = producto.estado;
+                this.Producto
+                    .Update(todo);
+
+                this.SaveChanges();
+                return producto;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public Producto Delete(string codigoproducto)
         {
             try
